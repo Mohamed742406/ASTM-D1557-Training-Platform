@@ -566,7 +566,7 @@ const s7_questions = [
         sections[9].questions = s9_questions;
         sections[10].questions = s10_questions;
 
-        // ===== Global Variables =====
+       // ===== Global Variables =====
 let currentSection = 1;
 let userProgress = JSON.parse(localStorage.getItem('astm_d1557_progress')) || {};
 
@@ -684,69 +684,6 @@ function toggleAnswer(header) {
     
     if (!isOpen) {
         const questionCard = header.closest('.question-card');
-        const index = parseInt(questionCard.getAttribute('data-question-index'));
-        markQuestionAsRead(currentSection, index);
-    }
-}
-
-// ===== Keyboard Support =====
-function handleKeyPress(event, element) {
-    if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleAnswer(element);
-    }
-}
-
-// ===== Progress Tracking =====
-function markQuestionAsRead(sectionId, questionIndex) {
-    if (!userProgress[sectionId]) {
-        userProgress[sectionId] = [];
-    }
-    
-    if (!userProgress[sectionId].includes(questionIndex)) {
-        userProgress[sectionId].push(questionIndex);
-        localStorage.setItem('astm_d1557_progress', JSON.stringify(userProgress));
-        updateProgressBadge();
-    }
-}
-
-function updateProgressBadge() {
-    const totalQuestions = Object.values(sections).reduce((sum, sec) => sum + sec.questions.length, 0);
-    const completedQuestions = Object.values(userProgress).reduce((sum, arr) => sum + arr.length, 0);
-    const percentage = Math.round((completedQuestions / totalQuestions) * 100);
-    
-    let badge = document.getElementById('progress-badge');
-    if (!badge) {
-        const headerBadges = document.querySelector('header .flex.gap-2');
-        badge = document.createElement('span');
-        badge.id = 'progress-badge';
-        badge.className = 'bg-green-600 px-3 py-1 rounded-full';
-        headerBadges.appendChild(badge);
-    }
-    
-    badge.textContent = `${percentage}% مكتمل`;
-}
-
-        /// ===== Toggle Answer Function =====
-function toggleAnswer(header) {
-    const panel = header.nextElementSibling;
-    const chevron = header.querySelector('.chevron');
-    const isOpen = panel.classList.contains('open');
-    
-    // Toggle panel
-    panel.classList.toggle('open');
-    
-    // Rotate chevron
-    if (chevron) {
-        chevron.classList.toggle('rotate-180');
-    }
-    
-    // Update ARIA for accessibility
-    header.setAttribute('aria-expanded', !isOpen);
-    
-    // Save progress when opening
-    if (!isOpen) {
-        const questionCard = header.closest('.question-card');
         const index = questionCard ? parseInt(questionCard.getAttribute('data-question-index')) : null;
         if (index !== null && !isNaN(index)) {
             markQuestionAsRead(currentSection, index);
@@ -796,19 +733,19 @@ function updateProgressBadge() {
     }
 }
 
-// ===== Search Functionality (Enhanced) =====
+// ===== Search Functionality =====
 let searchTimeout;
 document.getElementById('search-input').addEventListener('input', function(e) {
     clearTimeout(searchTimeout);
     
-    // Debounce للأداء الأفضل
     searchTimeout = setTimeout(() => {
         const term = e.target.value.trim().toLowerCase();
         const cards = document.querySelectorAll('.question-card');
         
         if (!term) {
-            // لو البحث فاضي، اعرض كل الأسئلة
             cards.forEach(card => card.style.display = 'block');
+            const noResultsMsg = document.getElementById('no-results-message');
+            if (noResultsMsg) noResultsMsg.remove();
             return;
         }
         
@@ -823,7 +760,6 @@ document.getElementById('search-input').addEventListener('input', function(e) {
             }
         });
         
-        // رسالة لو مفيش نتائج
         const container = document.getElementById('questions-container');
         let noResultsMsg = document.getElementById('no-results-message');
         
@@ -840,20 +776,18 @@ document.getElementById('search-input').addEventListener('input', function(e) {
                 noResultsMsg.remove();
             }
         }
-    }, 300); // انتظر 300ms بعد توقف الكتابة
+    }, 300);
 });
 
 // ===== Dynamic Question Count Update =====
 function updateQuestionCounts() {
     const totalCount = Object.values(sections).reduce((sum, sec) => sum + sec.questions.length, 0);
     
-    // تحديث العدد في الـ Header
     const headerCountBadge = document.querySelector('header .flex.gap-2 span:first-child');
     if (headerCountBadge) {
         headerCountBadge.textContent = `${totalCount} سؤال`;
     }
     
-    // تحديث العدد في كل قسم بالـ Sidebar
     Object.keys(sections).forEach(secId => {
         const count = sections[secId].questions.length;
         const btn = document.getElementById(`btn-sec${secId}`);
@@ -887,7 +821,6 @@ function setRandomTip() {
     }
 }
 
-// تغيير النصيحة كل 10 ثواني (اختياري)
 setRandomTip();
 setInterval(setRandomTip, 10000);
 
@@ -898,6 +831,6 @@ window.addEventListener('DOMContentLoaded', function() {
     renderSection(1);
 });
 
-</script>
+    </script>
 </body>
 </html>
