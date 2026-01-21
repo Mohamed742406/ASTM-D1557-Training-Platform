@@ -32,7 +32,7 @@
     <main class="container mx-auto px-4 py-8 flex-grow flex flex-col md:flex-row gap-6">
         
         <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-1/4 flex flex-col gap-2 h-fit md:sticky md:top-24">
+<aside class="w-full md:w-1/4 flex flex-col gap-2 h-fit md:sticky md:top-24">
             <div class="bg-white p-4 rounded-lg shadow border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 text-blue-900 border-b pb-2">الأقسام</h2>
                 <nav class="flex flex-col gap-2">
@@ -63,6 +63,18 @@
                     <button onclick="renderSection(7)" id="btn-sec7" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none">
                         7. المعايرة (Calibration)
                         <span class="block text-xs text-slate-500 mt-1">20 سؤال</span>
+                    </button>
+                    <button onclick="renderSection(8)" id="btn-sec8" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none">
+                        8. العينة الاختبارية (Test Specimen)
+                        <span class="block text-xs text-slate-500 mt-1">15 سؤال</span>
+                    </button>
+                    <button onclick="renderSection(9)" id="btn-sec9" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none">
+                        9. تحضير الأجهزة (Prep of Apparatus)
+                        <span class="block text-xs text-slate-500 mt-1">10 سؤال</span>
+                    </button>
+                    <button onclick="renderSection(10)" id="btn-sec10" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none">
+                        10. الإجراء (Procedure)
+                        <span class="block text-xs text-slate-500 mt-1">70 سؤال</span>
                     </button>
                 </nav>
             </div>
@@ -137,6 +149,24 @@
                 questions: []
             }
         };
+
+        // بيانات القسم الثامن
+const s8_questions = [
+    { q: "كام كيلو تربة جافة محتاجين لـ Methods A و B؟", a: "حوالي 16 كجم تربة جافة (Dry soil).", exp: "بيحتاجوا على الأقل 16 كيلو تربة جافة للاختبار الكامل (4-5 نقاط دمك).", ref: "8.1", tip: "اطلب 25-30 كيلو من الموقع عشان تكون في الأمان." },
+    { q: "لو عندي تربة مش متأكد فيها النسبة المحجوزة، إيه الحل؟", a: "اختر Method أعلى، أو اعمل معالجة تجريبية، أو Sieve analysis.", exp: "لو معندكش بيانات تدرج، نخل العينة على المناخل الحاكمة وشوف النسبة.", ref: "8.2", tip: "لو شفت حصى كبير بالعين، روح لـ Method C علطول." }
+];
+
+// بيانات القسم التاسع
+const s9_questions = [
+    { q: "إيه أول حاجة لازم أتأكد منها في القالب؟", a: "حجم القالب المعاير (Volume).", exp: "لازم تكون عارف الحجم بدقة عشان حساب الكثافة.", ref: "9.1", tip: "تأكد من وجود ستيكر المعايرة على القالب." },
+    { q: "متى يجب إعادة معايرة المدك (Restandardization)؟", a: "بعد أي إصلاح أو تعديل (بند 9.2).", exp: "عشان نضمن إن الطاقة لسه 56,000 ft-lbf/ft³.", ref: "9.2", tip: "سجل تاريخ الإصلاح والمعايرة في سجل الجهاز." }
+];
+
+// بيانات القسم العاشر
+const s10_questions = [
+    { q: "ليه ممنوع إعادة استخدام (Reuse) التربة المدموكة؟", a: "لأنها بتدي كثافة أعلى من الحقيقة (بند 10.1.1).", exp: "الدمك بيكسر الحبيبات ويغير خواصها، فلو دمجتها تاني النتيجة هتكون غلط.", ref: "10.1.1", tip: "ارمي التربة اللي طلعت من القالب واستخدم عينة جديدة." },
+    { q: "إزاي نعرف الـ Optimum بصرياً في التربة الطينية؟", a: "تتماسك بالضغط وتنكسر 'نظيف' لما تثنيها (Note 8).", exp: "لو اتفرفت تبقى Dry، لو لزقت في إيدك تبقى Wet.", ref: "Note 8", tip: "دي مهارة بتيجي بالخبرة." }
+];
 
         // --- SECTION 1 DATA (SCOPE) - 50 Questions ---
         // Generating a representative subset for full functionality, expanding programmatically where pattern allows
