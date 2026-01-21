@@ -35,8 +35,8 @@
 <aside class="w-full md:w-1/4 flex flex-col gap-2 h-fit md:sticky md:top-24">
             <div class="bg-white p-4 rounded-lg shadow border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 text-blue-900 border-b pb-2">الأقسام</h2>
-                <nav class="flex flex-col gap-2">
-                    <button onclick="renderSection(1)" id="btn-sec1" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none bg-blue-50 border-blue-600 font-semibold">
+                <nav class="flex flex-col gap-2 max-h-[70vh] overflow-y-auto pr-1">
+                    <button onclick="renderSection(1)" id="btn-sec1" class="nav-btn text-right px-4 py-3 rounded hover:bg-blue-50 transition border-r-4 border-transparent focus:outline-none">
                         1. النطاق (Scope)
                         <span class="block text-xs text-slate-500 mt-1">50 سؤال</span>
                     </button>
@@ -84,7 +84,7 @@
                 <p id="random-tip">اقرأ الشرح جيداً لفهم "الليه" مش بس "الإيه".</p>
             </div>
         </aside>
-
+        
         <!-- Questions Area -->
         <div class="w-full md:w-3/4">
             <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6">
